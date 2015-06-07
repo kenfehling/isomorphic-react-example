@@ -12,5 +12,8 @@ gulp.task('scripts', function () {
 
 });
 
-gulp.task('default', ['scripts']);
+gulp.task('watch', function () {
+    gulp.watch('app/**', ['scripts']);
+});
 
+gulp.task('default', ['scripts']);
