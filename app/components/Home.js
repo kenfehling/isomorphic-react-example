@@ -9,7 +9,7 @@ var fakeData = require('../data/fakeData.js').fakeData;
 var columnMeta = require('../data/columnMeta.js').columnMeta;
 var resultsPerPage = 200;
 
-var ReactApp = React.createClass({
+var Home = React.createClass({
 
       componentDidMount: function () {
         console.log(fakeData);
@@ -30,4 +30,4 @@ var ReactApp = React.createClass({
   });
 
 /* Module.exports instead of normal dom mounting */
-module.exports = ReactApp;
+module.exports = Home;
