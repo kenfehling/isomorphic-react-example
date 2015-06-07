@@ -7,6 +7,7 @@
     "ejs": "~0.8.5",
     "express": "~4.0.0",
     "griddle-react": "^0.1.19",
+    "gulp-sass": "^2.0.1",
     "path": "*",
     "react": "~0.12.0",
     "react-router": "^0.12.0"
@@ -16,6 +17,7 @@
     "gulp": "~3.8.9",
     "gulp-browserify": "~0.5.0",
     "gulp-concat": "~2.4.1",
+    "gulp-sourcemaps": "^1.5.2",
     "node-jsx": "~0.2.0",
     "react-tools": "^0.12.0",
     "reactify": "0.15.2"
