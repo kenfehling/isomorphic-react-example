@@ -129,7 +129,7 @@ If you would like to download the code and try it for yourself:
 4. Visit in your browser at: `http://localhost:4444`
 5. To see serverside rendering, comment out main.js from the /views/index.ejs file. This will show what is rendered purely from the server side.
 
-Build changes with `gulp`
+Build changes with `gulp` or run `gulp watch` to watch for changes.
 
 ### Other Isomorphic Tutorials & Resources
 
