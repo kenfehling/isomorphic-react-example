@@ -31,4 +31,4 @@ gulp.task('watch', function () {
     gulp.watch(paths.sass, ['sass']);
 });
 
-gulp.task('default', ['scripts']);
+gulp.task('default', ['scripts', 'sass']);
