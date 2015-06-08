@@ -2,7 +2,7 @@
 
 var React = require('react/addons');
 var Router = require("react-router");
-var routes = require("./routes/client-routes");
+var routes = require("./routes/routes");
 
 var mountNode = document.getElementById("react-main-mount");
 

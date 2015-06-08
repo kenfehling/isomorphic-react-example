@@ -10,7 +10,8 @@
     "gulp-sass": "^2.0.1",
     "path": "*",
     "react": "~0.12.0",
-    "react-router": "^0.12.0"
+    "react-router": "^0.12.0",
+    "react-style": "^0.5.5"
   },
   "devDependencies": {
     "browserify": "~3.20.0",
