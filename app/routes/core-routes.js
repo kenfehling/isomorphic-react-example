@@ -7,35 +7,28 @@ module.exports = function(app) {
 	app.use(function(req, res, next) {
 
 		// We customize the onAbort method in order to handle redirects
-		  var router = Router.create({
-		    routes: routes,
-		    location: req.path,
-		    onAbort: function defaultAbortHandler(abortReason, location) {
-		      if (abortReason && abortReason.to) {
-		        res.redirect(301, abortReason.to);
-		      } else {
-		        res.redirect(404, "404");
-		      }
-		    }
-		  });
+        var router = Router.create({
+            routes: routes,
+            location: req.path,
+            onAbort: function defaultAbortHandler(abortReason, location) {
+                if (abortReason && abortReason.to) {
+                    res.redirect(301, abortReason.to);
+                } else {  // TODO: Is this needed?
+                    res.redirect(404, "404");
+                }
+            }
+        });
 
-		// React.renderToString takes your component
-	    // and generates the markup
-
-		//var reactHtml = React.renderToString(ReactApp({}));
-
-        var reactHtml = "";
         router.run(function (Handler, state) {
-            reactHtml = React.renderToString(React.createElement(Handler, {
+            var html = React.renderToString(React.createElement(Handler, {
                 routerState: state,
                 //deviceType: deviceType,
                 environment: "server"
             }), null);
+            if (state.routes[1].isNotFound) {
+                res.status(400);
+            }
+            res.render('index.ejs', { reactOutput: html} );
         });
-
-	    // Output html rendered by react
-		// console.log(myAppHtml);
-	    res.render('index.ejs', {reactOutput: reactHtml});
 	});
-
 };
