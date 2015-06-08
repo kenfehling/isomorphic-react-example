@@ -15,7 +15,7 @@ gulp.task('scripts', function () {
     return gulp.src([paths.main_script])
         .pipe(browserify({
             debug: true,
-            transform: [ 'reactify' ]
+            transform: [ 'reactify' ]  // 'babelify'
         }))
         .pipe(gulp.dest(paths.output));
 });

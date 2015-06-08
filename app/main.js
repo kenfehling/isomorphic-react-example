@@ -1,4 +1,4 @@
-    /** @jsx React.DOM */
+/** @jsx React.DOM */
 
 var React = require('react/addons');
 var Router = require("react-router");
