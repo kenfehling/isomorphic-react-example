@@ -30,7 +30,7 @@ module.exports = function(app) {
 
             // Checks if route is NotFoundRoute
             if (state.routes[1].isNotFound) {
-                res.status(400);
+                res.status(404);
             }
             res.render('index.ejs', { reactOutput: html} );
         });
