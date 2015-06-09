@@ -2485,4 +2485,4 @@ var fakeData =  [
   }
 ];
 
-module.exports.fakeData = fakeData;
+module.exports = fakeData;
