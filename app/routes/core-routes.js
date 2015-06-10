@@ -1,6 +1,6 @@
-var React = require('react/addons');
-var Router = require("react-router");
-var routes = require('./routes');
+import React from "react/addons";
+import Router from 'react-router';
+import routes from "./routes";
 
 module.exports = function(app) {
 

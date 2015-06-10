@@ -1,18 +1,14 @@
-var React = require('react/addons');
-var Router = require("react-router");
-var RouteHandler = Router.RouteHandler;
-var Menu = require("./Menu");
+import React from "react/addons";
+import StyleSheet from'react-style';
+import { RouteHandler } from 'react-router';
+import Menu from "./Menu";
 
-var Application = React.createClass({
+export default class Application {
 
-	render: function () {
-		return (
-			<div>
-				<Menu />
-				<RouteHandler />
-			</div>
-		)
+	render() {
+		return <div>
+            <Menu />
+            <RouteHandler />
+        </div>;
 	}
-});
-
-module.exports = Application;
+}

@@ -1,31 +1,22 @@
-var React = require('react/addons');
+import React from 'react/addons';
+import StyleSheet from'react-style';
+import fakeData from '../data/fakeData.js';
 
-/* create factory with griddle component */
-var Griddle = React.createFactory(require('griddle-react'));
+const styles = StyleSheet.create({
+    page: {
+        margin: 'auto',
+        textAlign: 'center',
+        fontSize: 14
+    }
+});
 
-var fakeData = require('../data/fakeData.js').fakeData;
-var columnMeta = require('../data/columnMeta.js').columnMeta;
-var resultsPerPage = 200;
 
-var Home = React.createClass({
+export default class Home {
 
-      componentDidMount: function () {
-        console.log(fakeData);
+    render() {
+        return <div styles={[styles.page]}>
+            {fakeData[0].name}
+        </div>;
 
-      },
-      render: function () {
-        return (
-          <div id="table-area">
-
-             <Griddle results={fakeData}
-                      columnMetadata={columnMeta}
-                      resultsPerPage={resultsPerPage}
-                      tableClassName="table"/>
-
-          </div>
-        )
-      }
-  });
-
-/* Module.exports instead of normal dom mounting */
-module.exports = Home;
+    }
+}

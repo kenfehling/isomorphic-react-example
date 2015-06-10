@@ -1,7 +1,7 @@
-var React = require('react/addons');
-var StyleSheet = require('react-style');
+import React from "react/addons";
+import StyleSheet from'react-style';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
     page: {
         textAlign: "center",
         color: "#F00",
@@ -10,14 +10,10 @@ var styles = StyleSheet.create({
     }
 });
 
-var NotFound = React.createClass({
-    render: function () {
-        return (
-            <div styles={[styles.page]}>
-                404: Page not found
-            </div>
-        )
+export default class NotFound {
+    render() {
+        return <div styles={[styles.page]}>
+            404: Page not found
+        </div>;
     }
-});
-
-module.exports = NotFound;
+}

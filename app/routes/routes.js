@@ -1,21 +1,15 @@
-var React = require("react");
-var Router = require("react-router");
-var Application = require("../components/Application");
-var About = require("../components/About");
-var Home = require("../components/Home");
-var NotFound = require("../components/NotFound");
-var Route = Router.Route;
-var DefaultRoute = Router.DefaultRoute;
-var NotFoundRoute = Router.NotFoundRoute;
-var Redirect = Router.Redirect;
+import React from "react";
+import { Route, DefaultRoute, NotFoundRoute, Redirect } from "react-router";
+import Application from "../components/Application";
+import About from "../components/About";
+import Home from "../components/Home";
+import NotFound from "../components/NotFound";
 
-var routes = (
-  <Route handler={Application} path="/">
-    <DefaultRoute handler={Home} />
-    <Route name="about" handler={About} />
-    <NotFoundRoute handler={NotFound} />
-    <Redirect from="company" to="about" />
-  </Route>
+export default (
+    <Route name="app" handler={Application} path="/">
+        <DefaultRoute name="home" handler={Home} />
+        <Route name="about" handler={About} />
+        <NotFoundRoute name="not-found" handler={NotFound} />
+        <Redirect from="company" to="about" />
+    </Route>
 );
-
-module.exports = routes;

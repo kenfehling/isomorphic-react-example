@@ -1,8 +1,8 @@
-var React = require('react/addons');
-var StyleSheet = require('react-style');
-var Link = require('react-router').Link;
+import React from "react/addons";
+import StyleSheet from'react-style';
+import { Link } from 'react-router';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
     menu: {
         textAlign: "center",
         marginTop: 4,
@@ -16,16 +16,12 @@ var styles = StyleSheet.create({
     }
 });
 
-var Menu = React.createClass({
+export default class Menu {
 
-    render: function () {
-        return (
-            <div styles={[styles.menu]}>
-                <Link to="/" styles={[styles.item]}>Home</Link>
-                <Link to="about" styles={[styles.item]}>About</Link>
-            </div>
-        )
+    render() {
+        return <div styles={[styles.menu]}>
+            <Link to="/" styles={[styles.item]}>Home</Link>
+            <Link to="about" styles={[styles.item]}>About</Link>
+        </div>;
     }
-});
-
-module.exports = Menu;
+}
