@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
     },
     section: {
         marginBottom: 20
+    },
+    error: {
+        color: "#F00"
     }
 });
 
@@ -38,7 +41,7 @@ class AllLocations {
 
     render() {
         if (this.props.errorMessage) {
-            return <div>{this.props.errorMessage}</div>;
+            return <div styles={[styles.error]}>{this.props.errorMessage}</div>;
         }
 
         if (LocationStore.isLoading()) {

@@ -31,8 +31,8 @@ class LocationStore {
         this.locations = [];
     }
 
-    handleLocationsFailed(errorMessage) {
-        this.errorMessage = errorMessage;
+    handleLocationsFailed(error) {
+        this.errorMessage = error.msg;
     }
 
     resetAllFavorites() {

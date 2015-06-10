@@ -11,39 +11,22 @@ function toAbsolute(url) {
     }
 }
 
-function get(url, callback) {
-    $.getJSON(toAbsolute(url), callback);
+function get(url, success, error) {
+    $.getJSON(toAbsolute(url), success).error((e) => error(e.responseJSON));
 }
 
-function post(url, data, callback) {
-    $.post(toAbsolute(url), data, callback, 'json');
+function post(url, data, success, error) {
+    $.post(toAbsolute(url), data, success, 'json').error((e) => error(e.responseJSON));
 }
 
 export default {
     fetchLocations: () => {
         return {
-            remote() {
-                return new Promise((resolve, reject) => {
-                    get('/locations', (data) => {
-                        // change this to `false` to see the error action being handled.
-                        if (true) {
-                            // resolve with some mock data
-                            resolve(data);
-                        } else {
-                            reject('Things have broken');
-                        }
-                    });
-                });
-            },
-
-            local() {
-                // Never check locally, always fetch remotely.
-                return null;
-            },
-
+            remote: () => new Promise((Y, N) => get('/locations', Y, N)),
+            local: () => null,
             success: LocationActions.updateLocations,
             error: LocationActions.locationsFailed,
             loading: LocationActions.fetchLocations
-        }
+        };
     }
 };
