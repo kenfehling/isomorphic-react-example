@@ -17,7 +17,7 @@ var paths = {
     build_path: 'build/',
     scripts_build_path: 'build/app/',
     server_build_path: 'build/server/',
-    public_path: 'public/'
+    public_path: 'build/server/public/'
 };
 
 gulp.task('client:browserify', function () {
@@ -57,11 +57,6 @@ gulp.task('views:copy', function() {
         .pipe(copy(paths.build_path));
 });
 
-gulp.task('static:copy', function() {
-    return gulp.src(paths.public_path + "**")
-        .pipe(copy(paths.server_build_path));
-});
-
 gulp.task('server:watch', function() {
     gulp.watch([paths.server], server.restart);
 });
@@ -71,9 +66,5 @@ gulp.task('server:run', ['all:babel', 'server:babel'], function() {
 });
 
 gulp.task('default', function() {
-    runSequence(
-        ['client:browserify', 'sass'],
-        ['views:copy', 'static:copy'],
-        'server:run'
-    );
+    runSequence(['client:browserify', 'sass'], 'views:copy', 'server:run');
 });
