@@ -2,7 +2,7 @@ import React from "react/addons";
 import Router from 'react-router';
 import routes from "./routes";
 
-module.exports = function(app) {
+export default function(app) {
 
 	app.use(function(req, res, next) {
 

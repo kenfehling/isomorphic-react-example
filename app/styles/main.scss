@@ -1,4 +1,11 @@
-@import 'original';
+html {
+  overflow-y: scroll;
+}
+
+body {
+  background-color: #CCC;
+  font-family: Calibri, Arial, sans-serif;
+}
 
 a {
   text-decoration: none;

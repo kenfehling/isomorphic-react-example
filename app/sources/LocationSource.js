@@ -1,6 +1,6 @@
-var LocationActions = require('../actions/LocationActions');
+import LocationActions from '../actions/LocationActions';
 
-var mockData = [
+const mockData = [
     { id: 0, name: 'Abu Dhabi' },
     { id: 1, name: 'Berlin' },
     { id: 2, name: 'Bogota' },

@@ -1,7 +1,7 @@
-var alt = require('../alt');
-var LocationActions = require('../actions/LocationActions');
-var LocationSource = require('../sources/LocationSource');
-var FavoritesStore = require('./FavoritesStore');
+import alt from '../alt';
+import LocationActions from '../actions/LocationActions';
+import LocationSource from '../sources/LocationSource';
+import FavoritesStore from './FavoritesStore';
 
 class LocationStore {
     constructor() {
@@ -77,4 +77,4 @@ class LocationStore {
     }
 }
 
-module.exports = alt.createStore(LocationStore, 'LocationStore');
+export default alt.createStore(LocationStore, 'LocationStore');

@@ -10,9 +10,11 @@ const styles = StyleSheet.create({
         margin: 'auto',
         textAlign: 'center',
         fontSize: 14
+    },
+    section: {
+        marginBottom: 20
     }
 });
-
 
 class Favorites {
     render() {
@@ -69,12 +71,12 @@ export default class Home {
     render() {
         return <div styles={[styles.page]}>
             <h1>Locations</h1>
-            <AltContainer store={LocationStore}>
+            <AltContainer styles={[styles.section]} store={LocationStore}>
                 <AllLocations />
             </AltContainer>
 
             <h1>Favorites</h1>
-            <AltContainer store={FavoritesStore}>
+            <AltContainer styles={[styles.section]} store={FavoritesStore}>
                 <Favorites />
             </AltContainer>
         </div>;
