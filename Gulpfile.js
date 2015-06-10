@@ -5,6 +5,7 @@ var gulp        = require('gulp'),
     babel       = require('gulp-babel'),
     copy        = require('gulp-copy'),
     server      = require('gulp-develop-server'),
+    clean       = require('gulp-clean'),
     runSequence = require('run-sequence');
 
 var paths = {
@@ -41,11 +42,6 @@ gulp.task('sass', function () {
         .pipe(gulp.dest(paths.public_path));
 });
 
-gulp.task('watch', function () {
-    gulp.watch(paths.scripts, ['client:browserify']);
-    gulp.watch(paths.sass, ['sass']);
-});
-
 gulp.task('server:babel', function () {
     return gulp.src(paths.server_path + paths.server_file)
         .pipe(babel())
@@ -57,14 +53,34 @@ gulp.task('views:copy', function() {
         .pipe(copy(paths.build_path));
 });
 
-gulp.task('server:watch', function() {
-    gulp.watch([paths.server], server.restart);
+gulp.task('images:copy', function() {
+    return gulp.src('images/**')
+        .pipe(copy(paths.public_path));
 });
 
 gulp.task('server:run', ['all:babel', 'server:babel'], function() {
     server.listen( { path: paths.server_build_path + paths.server_file } );
 });
 
+gulp.task('server:watch', function() {
+    gulp.watch([paths.server], server.restart);
+});
+
+gulp.task('clean', function() {
+    return gulp.src(paths.build_path, {read: false}).pipe(clean());
+});
+
 gulp.task('default', function() {
-    runSequence(['client:browserify', 'sass'], 'views:copy', 'server:run');
+    runSequence(
+        'clean',
+        ['client:browserify', 'sass'],
+        ['views:copy', 'images:copy'],
+        'server:run'
+    );
+});
+
+gulp.task('watch', ['default'], function () {
+    //runSequence('default', 'server:watch');
+    gulp.watch(paths.scripts, ['client:browserify']);
+    gulp.watch(paths.sass, ['sass']);
 });

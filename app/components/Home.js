@@ -1,6 +1,9 @@
 import React from 'react/addons';
-import StyleSheet from'react-style';
-import fakeData from '../data/fakeData.js';
+import StyleSheet from 'react-style';
+import LocationStore from '../stores/LocationStore';
+import FavoritesStore from '../stores/FavoritesStore';
+import AltContainer from 'alt/AltContainer';
+import LocationActions from '../actions/LocationActions';
 
 const styles = StyleSheet.create({
     page: {
@@ -11,12 +14,69 @@ const styles = StyleSheet.create({
 });
 
 
+class Favorites {
+    render() {
+        return <ul>
+            {this.props.locations.map((location, i) => {
+                return (
+                    <li key={i}>{location.name}</li>
+                );
+            })}
+        </ul>;
+    }
+}
+
+class AllLocations {
+    addFave(ev) {
+        var location = LocationStore.getLocation(
+            Number(ev.target.getAttribute('data-id'))
+        );
+        LocationActions.favoriteLocation(location);
+    }
+
+    render() {
+        if (this.props.errorMessage) {
+            return <div>{this.props.errorMessage}</div>;
+        }
+
+        if (LocationStore.isLoading()) {
+            return <div>
+                <img src="/images/ajax-loader.gif" />
+            </div>;
+        }
+
+        return <ul>
+            { this.props.locations.map((location, i) => {
+                var faveButton = (
+                    <button onClick={this.addFave} data-id={location.id}>
+                        Favorite
+                    </button>
+                );
+
+                return <li key={i}>
+                    {location.name} {location.has_favorite ? '<3' : faveButton}
+                </li>;
+            })}
+        </ul>;
+    }
+}
+
 export default class Home {
+    componentDidMount() {
+        LocationStore.fetchLocations();
+    }
 
     render() {
         return <div styles={[styles.page]}>
-            {fakeData[0].name}
-        </div>;
+            <h1>Locations</h1>
+            <AltContainer store={LocationStore}>
+                <AllLocations />
+            </AltContainer>
 
+            <h1>Favorites</h1>
+            <AltContainer store={FavoritesStore}>
+                <Favorites />
+            </AltContainer>
+        </div>;
     }
 }
