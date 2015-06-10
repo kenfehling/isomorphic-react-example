@@ -1,37 +1,38 @@
 import LocationActions from '../actions/LocationActions';
+import $ from 'jquery';
 
-const mockData = [
-    { id: 0, name: 'Abu Dhabi' },
-    { id: 1, name: 'Berlin' },
-    { id: 2, name: 'Bogota' },
-    { id: 3, name: 'Buenos Aires' },
-    { id: 4, name: 'Cairo' },
-    { id: 5, name: 'Chicago' },
-    { id: 6, name: 'Lima' },
-    { id: 7, name: 'London' },
-    { id: 8, name: 'Miami' },
-    { id: 9, name: 'Moscow' },
-    { id: 10, name: 'Mumbai' },
-    { id: 11, name: 'Paris' },
-    { id: 12, name: 'San Francisco' }
-];
+function toAbsolute(url) {
+    var host = window.location.hostname;
+    if (host.indexOf('localhost') === 0 || host.indexOf('192.168') === 0) {
+        return 'http://' + host + ":" + 9000 + url;
+    }
+    else {
+        //return constants.REMOTE_API_HOST + url;
+    }
+}
+
+function get(url, callback) {
+    $.getJSON(toAbsolute(url), callback);
+}
+
+function post(url, data, callback) {
+    $.post(toAbsolute(url), data, callback, 'json');
+}
 
 export default {
     fetchLocations: () => {
         return {
             remote() {
                 return new Promise((resolve, reject) => {
-                    // simulate an asynchronous flow where data is fetched on
-                    // a remote server somewhere.
-                    setTimeout(() => {
+                    get('/locations', (data) => {
                         // change this to `false` to see the error action being handled.
                         if (true) {
                             // resolve with some mock data
-                            resolve(mockData);
+                            resolve(data);
                         } else {
                             reject('Things have broken');
                         }
-                    }, 250);
+                    });
                 });
             },
 
