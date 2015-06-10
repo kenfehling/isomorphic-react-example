@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react/addons');
 
 /* create factory with griddle component */
