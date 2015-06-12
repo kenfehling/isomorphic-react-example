@@ -6,6 +6,7 @@ var gulp        = require('gulp'),
     copy        = require('gulp-copy'),
     server      = require('gulp-develop-server'),
     clean       = require('gulp-clean'),
+    plumber     = require('gulp-plumber'),
     runSequence = require('run-sequence');
 
 var paths = {
@@ -23,6 +24,7 @@ var paths = {
 
 gulp.task('client:browserify', function () {
     return gulp.src([paths.main_script])
+        .pipe(plumber())
         .pipe(browserify({
             debug: true,
             transform: [ 'reactify', 'babelify' ]
