@@ -36,6 +36,8 @@ export default class Home {
         const locationActions = bindActionCreators(LocationActions, dispatch);
         const favoriteActions = bindActionCreators(FavoriteActions, dispatch);
         return <div styles={[styles.page]}>
+
+            {/* TODO: Can the properties be written in a cleaner way? */}
             <LocationList {...this.props}
                 {...locationActions} actions={locationActions} />
             <FavoriteList {...this.props}
