@@ -1,1 +1,1 @@
-export const locations = require('./locations');
+export locations from './locations';

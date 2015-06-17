@@ -1,5 +1,10 @@
 import React, { PropTypes } from 'react/addons';
 import StyleSheet from 'react-style';
+import { fetch } from './decorators';
+import { bindActionCreators } from 'redux';
+import { connect } from 'redux/react';
+import * as LocationActions from '../actions/LocationActions';
+import LocationList from './LocationList';
 
 const styles = StyleSheet.create({
     page: {
@@ -15,24 +20,15 @@ const styles = StyleSheet.create({
     }
 });
 
+@connect(state => ({
+    locations: state.locations
+}))
 export default class Home {
-    addFave() {
-
-    }
-
     render() {
+        const { dispatch } = this.props;
+        const actions = bindActionCreators(LocationActions, dispatch);
         return <div styles={[styles.page]}>
-            <h1>Locations</h1>
-            { this.props.locations.map((location, i) => {
-                var faveButton = (
-                    <button onClick={this.addFave} data-id={location.id}>
-                        Favorite
-                    </button>
-                );
-                return <p key={i}>
-                    {location.name} {location.has_favorite ? '<3' : faveButton}
-                </p>;
-            })}
+            <LocationList actions={actions} {...this.props} />
             <h1>Favorites</h1>
             <p>Not implemented</p>
         </div>;
