@@ -1,20 +1,20 @@
 import { Store } from 'marty';
-import FavoritesQuery from '../queries/FavoritesQuery';
-import FavoritesConstants from '../constants/FavoritesConstants';
+import LocationsQuery from '../queries/LocationsQuery';
+import LocationsConstants from '../constants/LocationsConstants';
 
-export default class FavoritesStore extends Store {
+export default class LocationsStore extends Store {
     constructor(options) {
         super(options);
         this.state = {};
         this.handlers = {
-            addFavorites: FavoritesConstants.RECEIVE_FAVORITES
+            addLocations: LocationsConstants.RECEIVE_LOCATIONS
         };
     }
     getAll() {
         return _.values(this.state);
     }
-    addFavorites(favorites) {
-        this.state[favorites.id] = favorites;
+    addLocations(locations) {
+        this.state[locations.id] = locations;
         this.hasChanged();
     }
     getById(id) {
@@ -24,7 +24,7 @@ export default class FavoritesStore extends Store {
                 return this.state[id];
             },
             remotely() {
-                return FavoritesQuery.for(this).getById(id);
+                return LocationsQuery.for(this).getById(id);
             }
         });
     }

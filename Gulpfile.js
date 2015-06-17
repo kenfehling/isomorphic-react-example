@@ -27,7 +27,7 @@ gulp.task('client:browserify', function () {
         .pipe(plumber())
         .pipe(browserify({
             debug: true,
-            transform: [ 'reactify', 'babelify' ]
+            transform: [ /* 'reactify', */ 'babelify' ]
         }))
         .pipe(gulp.dest(paths.public_path));
 });

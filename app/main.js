@@ -1,6 +1,10 @@
+window.Marty = require('marty');
+import { Application } from "Marty";
 import React from "react/addons";
 import Router from 'react-router';
 import routes from "./routes/routes";
+import LocationsStore from "./stores/LocationsStore";
+import FavoritesStore from "./stores/FavoritesStore";
 
 var mountNode = document.getElementById("react-main-mount");
 
@@ -9,3 +13,4 @@ var mountNode = document.getElementById("react-main-mount");
 Router.run(routes, Router.HistoryLocation, function (Handler) {
   React.render(<Handler/>, mountNode);
 });
+

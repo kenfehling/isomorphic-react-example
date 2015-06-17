@@ -1,9 +1,9 @@
 import React from 'react/addons';
 import StyleSheet from 'react-style';
-import LocationStore from '../stores/LocationStore';
+import { createContainer } from 'marty';
+import LocationsStore from '../stores/LocationsStore';
 import FavoritesStore from '../stores/FavoritesStore';
-import AltContainer from 'alt/AltContainer';
-import LocationActions from '../actions/LocationActions';
+import LocationActions from '../actions/LocationsActionCreators';
 
 const styles = StyleSheet.create({
     page: {
@@ -21,8 +21,9 @@ const styles = StyleSheet.create({
 
 class Favorites {
     render() {
+        console.log(this.props);
         return <ul>
-            {this.props.locations.map((location, i) => {
+            {this.props.favorites.map((location, i) => {
                 return (
                     <li key={i}>{location.name}</li>
                 );
@@ -33,7 +34,7 @@ class Favorites {
 
 class AllLocations {
     addFave(ev) {
-        var location = LocationStore.getLocation(
+        var location = LocationsStore.getLocation(
             Number(ev.target.getAttribute('data-id'))
         );
         LocationActions.favoriteLocation(location);
@@ -44,7 +45,7 @@ class AllLocations {
             return <div styles={[styles.error]}>{this.props.errorMessage}</div>;
         }
 
-        if (LocationStore.isLoading()) {
+        if (LocationsStore.isLoading()) {
             return <div>
                 <img src="/images/ajax-loader.gif" />
             </div>;
@@ -66,22 +67,27 @@ class AllLocations {
     }
 }
 
-export default class Home {
-    componentDidMount() {
-        LocationStore.fetchLocations();
-    }
-
+var Locations = React.createClass({
     render() {
-        return <div styles={[styles.page]}>
-            <h1>Locations</h1>
-            <AltContainer styles={[styles.section]} store={LocationStore}>
-                <AllLocations />
-            </AltContainer>
-
-            <h1>Favorites</h1>
-            <AltContainer styles={[styles.section]} store={FavoritesStore}>
-                <Favorites />
-            </AltContainer>
-        </div>;
+        var locations = this.props.locations;
+        return <div className='locations'>{locations}</div>;
     }
-}
+});
+
+export default createContainer(Locations, {
+    listenTo: 'LocationsStore',
+    fetch: {
+        location() {
+            console.log(LocationsStore.for(this));
+            return LocationsStore.for(this).getById(this.props.id);
+        }
+    },
+    failed(errors) {
+        return <div styles={[styles.error]}>{errors}</div>;
+    },
+    pending() {
+        return this.done({
+            location: {}
+        });
+    }
+});
