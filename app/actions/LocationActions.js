@@ -12,9 +12,13 @@ export function fetchAllLocations() {
     };
 }
 
-export function addFavorite(text) {
-    return {
-        type: ADD_FAVORITE,
-        text
+export function addFavorite(id) {
+    return dispatch => {
+        fetch('http://localhost:9000/favorites', { method: 'POST', body: 'id=' + id })
+            .then(res => res.json())
+            .then(res => dispatch({
+                type: ADD_FAVORITE,
+                favorites: res
+            }));
     };
 }

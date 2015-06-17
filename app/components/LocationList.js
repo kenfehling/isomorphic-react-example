@@ -19,20 +19,22 @@ const styles = StyleSheet.create({
 @fetch(actions => actions.fetchAllLocations())
 export default class LocationList {
     static propTypes = {
-        locations: PropTypes.array.isRequired
+        locations: PropTypes.array.isRequired,
+        addFavorite: PropTypes.func.isRequired
     };
 
-    addFave() {
-
+    addFave(ev) {
+        const id = ev.target.getAttribute('data-id');
+        this.props.addFavorite(id);
     }
 
     render() {
         const { locations } = this.props;
-        return <div styles={[styles.page]}>
+        return <div>
             <h1>Locations</h1>
             { locations ? locations.map((location, i) => {
                 var faveButton = (
-                    <button onClick={this.addFave} data-id={location.id}>
+                    <button onClick={this.addFave} data-id={location._id}>
                         Favorite
                     </button>
                 );

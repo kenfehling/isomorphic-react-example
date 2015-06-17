@@ -1,8 +1,6 @@
 import { FETCH_ALL_LOCATIONS, ADD_FAVORITE } from '../constants/ActionTypes';
 
-const initialState = {
-    locations: []
-};
+const initialState = [];
 
 export default function locations(state=initialState, action) {
     switch (action.type) {
@@ -12,8 +10,7 @@ export default function locations(state=initialState, action) {
                 text: action.text
             }, ...state];
         case FETCH_ALL_LOCATIONS:
-            var s = Object.assign({}, state, { locations: action.locations });
-            return s.locations;
+            return action.locations;
     }
     return state;
 }

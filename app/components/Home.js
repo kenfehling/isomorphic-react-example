@@ -4,7 +4,9 @@ import { fetch } from './decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'redux/react';
 import * as LocationActions from '../actions/LocationActions';
+import * as FavoriteActions from '../actions/FavoriteActions';
 import LocationList from './LocationList';
+import FavoriteList from './FavoriteList';
 
 const styles = StyleSheet.create({
     page: {
@@ -21,16 +23,23 @@ const styles = StyleSheet.create({
 });
 
 @connect(state => ({
-    locations: state.locations
+    locations: state.locations,
+    favorites: state.favorites
 }))
 export default class Home {
+    static propTypes = {
+        locations: PropTypes.array.isRequired
+    };
+
     render() {
         const { dispatch } = this.props;
-        const actions = bindActionCreators(LocationActions, dispatch);
+        const locationActions = bindActionCreators(LocationActions, dispatch);
+        const favoriteActions = bindActionCreators(FavoriteActions, dispatch);
         return <div styles={[styles.page]}>
-            <LocationList actions={actions} {...this.props} />
-            <h1>Favorites</h1>
-            <p>Not implemented</p>
+            <LocationList {...this.props}
+                {...locationActions} actions={locationActions} />
+            <FavoriteList {...this.props}
+                {...favoriteActions} actions={favoriteActions} />
         </div>;
     }
 }
