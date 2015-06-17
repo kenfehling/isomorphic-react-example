@@ -1,6 +1,9 @@
 import React from "react/addons";
 import Router from 'react-router';
 import routes from "./routes";
+import * as stores from '../stores';
+import { createRedux } from 'redux';
+import { Provider } from 'redux/react';
 
 export default function(app) {
 
@@ -19,14 +22,20 @@ export default function(app) {
             }
         });
 
+        const redux = createRedux(stores);
+
         router.run(function (Handler, state) {
             // React.renderToString takes your component
             // and generates the markup
-            var html = React.renderToString(React.createElement(Handler, {
-                routerState: state,
-                //deviceType: deviceType,
-                environment: "server"
-            }), null);
+            var html = React.renderToString(
+                React.createElement(Provider, { redux: redux },
+                    () => React.createElement(Handler, {
+                        routerState: state,
+                        //deviceType: deviceType,
+                        environment: "server"
+                    })
+                ),
+            null);
 
             // Checks if route is NotFoundRoute
             if (state.routes[1].isNotFound) {
