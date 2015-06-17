@@ -5,7 +5,7 @@ var gulp        = require('gulp'),
     babel       = require('gulp-babel'),
     copy        = require('gulp-copy'),
     server      = require('gulp-develop-server'),
-    clean       = require('gulp-clean'),
+    del         = require('del'),
     plumber     = require('gulp-plumber'),
     runSequence = require('run-sequence');
 
@@ -27,14 +27,16 @@ gulp.task('client:browserify', function () {
         .pipe(plumber())
         .pipe(browserify({
             debug: true,
-            transform: [ 'reactify', 'babelify' ]
+            transform: [ 'babelify' ]
         }))
         .pipe(gulp.dest(paths.public_path));
 });
 
 gulp.task('all:babel', function() {
     return gulp.src(paths.scripts)
+        .pipe(sourcemaps.init())
         .pipe(babel())
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.scripts_build_path));
 });
 
@@ -68,13 +70,14 @@ gulp.task('server:watch', function() {
     gulp.watch([paths.server], server.restart);
 });
 
+// May be something wrong with this:
 gulp.task('clean', function() {
-    return gulp.src(paths.build_path, {read: false}).pipe(clean());
+    return del([paths.build_path]);
 });
 
 gulp.task('default', function() {
     runSequence(
-        'clean',
+        //'clean',
         ['client:browserify', 'sass'],
         ['views:copy', 'images:copy'],
         'server:run'

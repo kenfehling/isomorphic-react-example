@@ -1,21 +1,8 @@
-import alt from '../alt';
+import { ADD_TODO } from '../constants/ActionTypes';
 
-class LocationActions {
-    updateLocations(locations) {
-        this.dispatch(locations);
-    }
-
-    fetchLocations() {
-        this.dispatch();
-    }
-
-    locationsFailed(errorMessage) {
-        this.dispatch(errorMessage);
-    }
-
-    favoriteLocation(location) {
-        this.dispatch(location);
-    }
+export function addTodo(text) {
+    return {
+        type: ADD_TODO,
+        text
+    };
 }
-
-module.exports = alt.createActions(LocationActions);

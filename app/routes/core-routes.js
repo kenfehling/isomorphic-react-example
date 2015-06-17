@@ -32,7 +32,7 @@ export default function(app) {
             if (state.routes[1].isNotFound) {
                 res.status(404);
             }
-            res.render('index.ejs', { reactOutput: html} );
+            res.render('index.ejs', { reactOutput: html } );
         });
 	});
 };
