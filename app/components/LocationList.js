@@ -40,8 +40,6 @@ export default class LocationList {
                     {location.name} {location.has_favorite ? '<3' : faveButton}
                 </p>;
             }) : <div styles={[styles.error]}>No locations</div>}
-            <h1>Favorites</h1>
-            <p>Not implemented</p>
         </div>;
     }
 }
