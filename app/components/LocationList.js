@@ -34,7 +34,7 @@ export default class LocationList {
             <h1>Locations</h1>
             { locations ? locations.map((location, i) => {
                 var faveButton = (
-                    <button onClick={this.addFave} data-id={location._id}>
+                    <button onClick={this.addFave.bind(this)} data-id={location._id}>
                         Favorite
                     </button>
                 );

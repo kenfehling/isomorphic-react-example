@@ -14,11 +14,18 @@ export function fetchAllLocations() {
 
 export function addFavorite(id) {
     return dispatch => {
-        fetch('http://localhost:9000/favorites', { method: 'POST', body: 'id=' + id })
-            .then(res => res.json())
-            .then(res => dispatch({
-                type: ADD_FAVORITE,
-                favorites: res
-            }));
+        fetch('http://localhost:9000/favorites', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: 2 })
+        })
+        .then(res => res.json())
+        .then(res => dispatch({
+            type: ADD_FAVORITE,
+            favorites: res
+        }));
     };
 }
