@@ -24,10 +24,13 @@ export default class FavoriteList {
 
     render() {
         const { favorites } = this.props;
+
+        console.log("FAVS", favorites);
+
         return <div>
             <h1>Favorites</h1>
             { favorites ? favorites.map((favorite, i) => {
-                return <p>{favorite.location.name}</p>;
+                return <p>{favorite.location}</p>;
             }) : <div styles={[styles.error]}>No favorites</div>}
         </div>;
     }

@@ -1,2 +1,2 @@
-export locations from './locations';
 export favorites from './favorites';
+export locations from './locations';

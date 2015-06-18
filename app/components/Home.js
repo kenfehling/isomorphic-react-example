@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
 }))
 export default class Home {
     static propTypes = {
-        locations: PropTypes.array.isRequired
+        locations: PropTypes.array.isRequired,
+        favorites: PropTypes.array.isRequired
     };
 
     render() {
@@ -39,7 +40,8 @@ export default class Home {
 
             {/* TODO: Can the properties be written in a cleaner way? */}
             <LocationList {...this.props}
-                {...locationActions} actions={locationActions} />
+                {...locationActions} {...favoriteActions}
+                actions={locationActions} />
             <FavoriteList {...this.props}
                 {...favoriteActions} actions={favoriteActions} />
         </div>;
