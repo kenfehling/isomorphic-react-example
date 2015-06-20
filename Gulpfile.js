@@ -9,10 +9,12 @@ var gulp        = require('gulp'),
     del         = require('del'),
     plumber     = require('gulp-plumber'),
     runSequence = require('run-sequence'),
-    source      = require('vinyl-source-stream');
+    source      = require('vinyl-source-stream'),
+    jest        = require('jest-cli');
 
 var paths = {
     scripts: ['app/**/*.js', 'app/**/*.jsx'],
+    tests: ['tests/**/*.js'],
     sass: ['app/**/*.s?ss'],
     main_script: 'app/main.js',
     main_sass: 'app/styles/main.scss',
@@ -87,4 +89,10 @@ gulp.task('watch', ['default'], function () {
     //runSequence('default', 'server:watch');
     gulp.watch(paths.scripts, ['client:browserify']);
     gulp.watch(paths.sass, ['sass']);
+});
+
+gulp.task('jest', function(done) {
+    return jest.runCLI({config : { rootDir: 'app' }}, ".", function() {
+        done();
+    });
 });
