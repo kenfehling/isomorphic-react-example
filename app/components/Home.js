@@ -39,9 +39,7 @@ export default class Home {
         return <div styles={[styles.page]}>
 
             {/* TODO: Can the properties be written in a cleaner way? */}
-            <LocationList {...this.props}
-                {...locationActions} {...favoriteActions}
-                actions={locationActions} />
+            <LocationList {...this.props} actions={locationActions} />
             <FavoriteList {...this.props}
                 {...favoriteActions} actions={favoriteActions} />
         </div>;

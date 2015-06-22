@@ -71,7 +71,7 @@ gulp.task('server:watch', function() {
     gulp.watch([paths.server], server.restart);
 });
 
-// May be something wrong with this:
+// Maybe something wrong with this:
 gulp.task('clean', function() {
     return del([paths.build_path]);
 });

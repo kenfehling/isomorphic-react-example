@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react/addons';
+import React, { PropTypes, Component } from 'react/addons';
 import StyleSheet from 'react-style';
-import { fetch } from './decorators';
+import LocationListMediator from '../mediators/LocationListMediator';
 
 const styles = StyleSheet.create({
     page: {
@@ -16,33 +16,32 @@ const styles = StyleSheet.create({
     }
 });
 
-@fetch(actions => actions.fetchAllLocations())
-export default class LocationList {
-    static propTypes = {
-        locations: PropTypes.array.isRequired,
-        addFavorite: PropTypes.func.isRequired
+export default class LocationList extends Component {
+
+    static defaultProps = {
+        mediatorClass: LocationListMediator
     };
 
-    addFave(ev) {
-        const id = ev.target.getAttribute('data-id');
-        this.props.addFavorite(id);
+    constructor(props) {
+        super(props);
+        this.state = {
+            locations: []
+        }
+    }
+
+    componentDidMount() {
+        new this.props.mediatorClass(this);
     }
 
     render() {
-        const { locations } = this.props;
-
-        console.log("LOCATIONS RENDER", locations);
-
         return <div>
             <h1>Locations</h1>
-            { locations ? locations.map((location, i) => {
-                var faveButton = (
-                    <button onClick={this.addFave.bind(this)} data-id={location._id}>
-                        Favorite
-                    </button>
-                );
+            { this.state.locations ? this.state.locations.map((loc, i) => {
+                var faveButton = <button onClick={() => this.addFav(loc.id)}>
+                    Favorite
+                </button>;
                 return <p key={i}>
-                    {location.name} {location.has_favorite ? '<3' : faveButton}
+                    {loc.name} {loc.hasFavorite ? '<3' : faveButton}
                 </p>;
             }) : <div styles={[styles.error]}>No locations</div>}
         </div>;

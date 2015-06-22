@@ -3,6 +3,11 @@ import StyleSheet from'react-style';
 import { RouteHandler } from 'react-router';
 import Menu from "./Menu";
 
+import { locations } from '../Singletons';
+import Location from '../models/Location';
+
+locations.add(new Location('0', 'Seoul'));
+
 const styles = StyleSheet.create({
     title: {
         textAlign: 'center'
@@ -10,7 +15,6 @@ const styles = StyleSheet.create({
 });
 
 export default class Application {
-
 	render() {
         return <div>
             <h1 styles={[styles.title]}>
