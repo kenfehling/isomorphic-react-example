@@ -63,11 +63,6 @@ gulp.task('images:copy', function() {
         .pipe(copy(paths.public_path));
 });
 
-gulp.task('css:copy', function() {
-    return gulp.src('style.css')
-        .pipe(copy(paths.build_path));
-});
-
 gulp.task('server:run', ['all:babel', 'server:babel'], function() {
     server.listen( { path: paths.server_build_path + paths.server_file } );
 });
@@ -89,7 +84,7 @@ gulp.task('default', function() {
     runSequence(
         ['clean'],
         ['client:browserify', 'sass'],
-        ['views:copy', 'images:copy', 'css:copy'],
+        ['views:copy', 'images:copy'],
         'server:run'
     );
 });
