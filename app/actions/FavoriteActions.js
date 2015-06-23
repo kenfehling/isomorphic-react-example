@@ -1,9 +1,10 @@
 import 'isomorphic-fetch';
 import { FETCH_ALL_FAVORITES, ADD_FAVORITE } from '../constants/ActionTypes';
+import { API_HOST } from '../constants/Settings';
 
 export function fetchAllFavorites() {
     return dispatch => {
-        fetch('http://localhost:9000/favorites')
+        fetch(API_HOST + '/favorites')
         .then(res => res.json())
         .then(res => dispatch({
             type: FETCH_ALL_FAVORITES,
@@ -14,7 +15,7 @@ export function fetchAllFavorites() {
 
 export function addFavorite(id) {
     return dispatch => {
-        fetch('http://localhost:9000/favorites', {
+        fetch(API_HOST + '/favorites', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
