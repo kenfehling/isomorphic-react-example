@@ -30,9 +30,6 @@ export default class LocationList {
 
     render() {
         const { locations } = this.props;
-
-        console.log("LOCATIONS RENDER", locations);
-
         return <div>
             <h1>Locations</h1>
             { locations ? locations.map((location, i) => {
