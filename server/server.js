@@ -15,7 +15,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Set up Routes for the application
-require('../app/routes/core-routes')(app);
+require('./core-routes')(app);
 
 //Route not found -- Set 404
 app.get('*', function(req, res) {

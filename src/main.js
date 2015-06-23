@@ -1,6 +1,6 @@
 import React from "react/addons";
 import Router from 'react-router';
-import routes from "./routes/routes";
+import routes from "./routes";
 import { Provider } from 'redux/react';
 import { createDispatcher, createRedux, composeStores } from 'redux';
 import * as stores from './stores';

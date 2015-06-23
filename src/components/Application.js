@@ -4,18 +4,15 @@ import { RouteHandler } from 'react-router';
 import Menu from "./Menu";
 
 const styles = StyleSheet.create({
-    title: {
-        textAlign: 'center'
+    page: {
+        backgroundColor: '#ffad00'
     }
 });
 
 export default class Application {
 
 	render() {
-        return <div>
-            <h1 styles={[styles.title]}>
-                Isomorphic Server Side Rendering with React
-            </h1>
+        return <div style={styles.page}>
             <Menu />
             {/* TODO: Do we have to pass locations to RouteHandler? */}
             <RouteHandler {...this.props} />

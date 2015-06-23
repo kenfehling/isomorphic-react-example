@@ -6,28 +6,28 @@ var gulp        = require('gulp'),
     babelify    = require('babelify'),
     copy        = require('gulp-copy'),
     server      = require('gulp-develop-server'),
-    del         = require('del'),
+    clean       = require('gulp-rimraf'),
     plumber     = require('gulp-plumber'),
     runSequence = require('run-sequence'),
     source      = require('vinyl-source-stream'),
     jest        = require('jest-cli');
 
 var paths = {
-    scripts: ['app/**/*.js', 'app/**/*.jsx'],
+    scripts: ['src/**/*.js', 'src/**/*.jsx'],
     tests: ['tests/**/*.js'],
-    sass: ['app/**/*.s?ss'],
-    main_script: 'app/main.js',
-    main_sass: 'app/styles/main.scss',
+    sass: ['src/**/*.s?ss'],
+    main_client_script: 'src/main.js',
+    main_sass: 'src/styles/main.scss',
     server_file: 'server.js',
     server_path: 'server/',
     build_path: 'build/',
-    scripts_build_path: 'build/app/',
+    scripts_build_path: 'build/src/',
     server_build_path: 'build/server/',
     public_path: 'build/server/public/'
 };
 
 gulp.task('client:browserify', function () {
-    return browserify(paths.main_script)
+    return browserify(paths.main_client_script)
             .transform(babelify, { stage: 0, optional: ["runtime"] })
             .bundle()
         .pipe(plumber())
@@ -42,7 +42,7 @@ gulp.task('all:babel', function() {
 });
 
 gulp.task('server:babel', function () {
-    return gulp.src(paths.server_path + paths.server_file)
+    return gulp.src(paths.server_path + "**/*.js")
         .pipe(babel({ stage: 0, optional: ["runtime"] }))
         .pipe(gulp.dest(paths.server_build_path));
 });
@@ -63,36 +63,44 @@ gulp.task('images:copy', function() {
         .pipe(copy(paths.public_path));
 });
 
+gulp.task('css:copy', function() {
+    return gulp.src('style.css')
+        .pipe(copy(paths.build_path));
+});
+
 gulp.task('server:run', ['all:babel', 'server:babel'], function() {
     server.listen( { path: paths.server_build_path + paths.server_file } );
 });
 
-gulp.task('server:watch', function() {
-    gulp.watch([paths.server], server.restart);
+gulp.task('server:restart', ['all:babel', 'server:babel'], function() {
+    server.restart();
 });
 
-// May be something wrong with this:
+gulp.task('server:watch', ['default'], function() {
+    gulp.watch([paths.server_path + "**/*.js"], ['server:restart']);
+});
+
 gulp.task('clean', function() {
-    return del([paths.build_path]);
+  return gulp.src([paths.build_path], { read: false })
+      .pipe(clean());
 });
 
 gulp.task('default', function() {
     runSequence(
-        //'clean',
+        ['clean'],
         ['client:browserify', 'sass'],
-        ['views:copy', 'images:copy'],
+        ['views:copy', 'images:copy', 'css:copy'],
         'server:run'
     );
 });
 
-gulp.task('watch', ['default'], function () {
-    //runSequence('default', 'server:watch');
+gulp.task('watch', ['default', 'server:watch'], function () {
     gulp.watch(paths.scripts, ['client:browserify']);
     gulp.watch(paths.sass, ['sass']);
 });
 
 gulp.task('jest', function(done) {
-    return jest.runCLI({config : { rootDir: 'app' }}, ".", function() {
+    return jest.runCLI({config : { rootDir: 'src' }}, ".", function() {
         done();
     });
 });
