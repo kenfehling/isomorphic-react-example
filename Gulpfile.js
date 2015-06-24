@@ -70,7 +70,7 @@ gulp.task('server:run', ['server:babel'], function() {
     server.listen( { path: paths.server_build_path + paths.server_file } );
 });
 
-gulp.task('server:restart', ['all:compile'], function() {
+gulp.task('server:restart', ['server:babel'], function() {
     server.restart();
     //livereload();
 });
