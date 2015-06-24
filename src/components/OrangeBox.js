@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes, Component } from 'react/addons';
 import DraggableOrange from './DraggableOrange';
 import { verticalCenter } from '../styles/Themes';
 import { fetch } from './decorators';

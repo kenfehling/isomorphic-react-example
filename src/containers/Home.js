@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react/addons';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend, { NativeTypes } from 'react-dnd/modules/backends/HTML5';
-import update from 'react/lib/update';
 import Controls from '../components/Controls';
 import OrangeBox from '../components/OrangeBox';
 import Basket from '../components/Basket';
@@ -29,6 +28,10 @@ const styles = {
 }))
 @DragDropContext(HTML5Backend)
 export default class Container extends Component {
+  static propTypes = {
+      oranges: PropTypes.object.isRequired
+  };
+
   render() {
     const { dispatch } = this.props;
     const orangeActions = bindActionCreators(OrangeActions, dispatch);
@@ -44,7 +47,7 @@ export default class Container extends Component {
           <Stats actions={orangeActions} />
       </div>
       */}
-        <Controls actions={orangeActions} {...this.props} />
+        <Controls actions={orangeActions} />
     </div>;
   }
 }

@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes, Component } from 'react/addons';
 import { areaTheme, buttonTheme } from '../styles/Themes';
 import OrangeBox from './OrangeBox';
 
