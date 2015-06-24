@@ -16,7 +16,7 @@ var paths = {
     scripts: ['app/**/*.js', 'app/**/*.jsx'],
     tests: ['tests/**/*.js'],
     sass: ['app/**/*.s?ss'],
-    main_script: 'app/main.js',
+    main_client_script: 'app/main.js',
     main_sass: 'app/styles/main.scss',
     server_file: 'server.js',
     server_path: 'server/',
@@ -27,7 +27,7 @@ var paths = {
 };
 
 gulp.task('client:browserify', function () {
-    return browserify(paths.main_script)
+    return browserify(paths.main_client_script)
             .transform(babelify, { stage: 0, optional: ["runtime"] })
             .bundle()
         .pipe(plumber())
@@ -67,8 +67,12 @@ gulp.task('server:run', ['all:babel', 'server:babel'], function() {
     server.listen( { path: paths.server_build_path + paths.server_file } );
 });
 
-gulp.task('server:watch', function() {
-    gulp.watch([paths.server], server.restart);
+gulp.task('server:restart', ['all:babel', 'server:babel'], function() {
+    server.restart();
+});
+
+gulp.task('server:watch', ['default'], function() {
+    gulp.watch([paths.server_path + "**/*.js"], ['server:restart']);
 });
 
 // May be something wrong with this:
@@ -85,8 +89,7 @@ gulp.task('default', function() {
     );
 });
 
-gulp.task('watch', ['default'], function () {
-    //runSequence('default', 'server:watch');
+gulp.task('watch', ['default', 'server:watch'], function () {
     gulp.watch(paths.scripts, ['client:browserify']);
     gulp.watch(paths.sass, ['sass']);
 });
