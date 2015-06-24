@@ -44,7 +44,7 @@ export default class Container extends Component {
           <Stats actions={orangeActions} />
       </div>
       */}
-        <Controls actions={orangeActions} />
+        <Controls actions={orangeActions} {...this.props} />
     </div>;
   }
 }
