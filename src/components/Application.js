@@ -2,6 +2,7 @@ import React from "react/addons";
 import StyleSheet from'react-style';
 import { RouteHandler } from 'react-router';
 import Menu from "./Menu";
+import { fetch } from './decorators';
 
 const styles = StyleSheet.create({
     page: {
@@ -9,6 +10,7 @@ const styles = StyleSheet.create({
     }
 });
 
+@fetch(actions => actions.fetchOranges())
 export default class Application {
 
 	render() {
