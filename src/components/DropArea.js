@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { DropTarget } from 'react-dnd';
-import { areaTheme, verticalCenter } from './Themes';
+import { areaTheme, verticalCenter } from '../styles/Themes';
 import ItemTypes from './ItemTypes';
 import Orange from './Orange';
 
@@ -30,7 +30,8 @@ export default class DropArea extends Component {
     isOver: PropTypes.bool.isRequired,
     canDrop: PropTypes.bool.isRequired,
     accepts: PropTypes.arrayOf(PropTypes.string).isRequired,
-    onDrop: PropTypes.func.isRequired
+    onDrop: PropTypes.func.isRequired,
+    oranges: PropTypes.number.isRequired
   };
 
   render() {
@@ -44,10 +45,7 @@ export default class DropArea extends Component {
     }
 
     return connectDropTarget(
-      <div style={{ ...styles.container, backgroundColor }}
-//	  		accepts={[ItemTypes.ORANGE]}
-  //            onDrop={(item) => this.handleDrop()}
-	  >
+      <div style={{ ...styles.container, backgroundColor }}>
           <div style={styles.inner}>
               <p>{ isActive ? 'Release to drop' : name }</p>
               <p>{label}: { oranges }</p>

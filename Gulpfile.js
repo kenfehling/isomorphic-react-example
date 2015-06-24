@@ -11,6 +11,7 @@ var gulp        = require('gulp'),
     runSequence = require('run-sequence'),
     source      = require('vinyl-source-stream'),
     jest        = require('jest-cli');
+    //livereload  = require('gulp-livereload');
 
 var paths = {
     scripts: ['src/**/*.js', 'src/**/*.jsx'],
@@ -67,12 +68,13 @@ gulp.task('images:copy', function() {
         .pipe(copy(paths.public_path));
 });
 
-gulp.task('server:run', ['all:babel', 'server:babel'], function() {
+gulp.task('server:run', function() {
     server.listen( { path: paths.server_build_path + paths.server_file } );
 });
 
-gulp.task('server:restart', ['all:babel', 'server:babel'], function() {
+gulp.task('server:restart', ['all:compile'], function() {
     server.restart();
+    //livereload();
 });
 
 gulp.task('server:watch', ['default'], function() {
@@ -92,12 +94,15 @@ gulp.task('all:compile', function() {
   runSequence(
       //['clean'],
       ['client:browserify', 'sass'],
-      ['views:copy', 'images:copy']
+      ['views:copy', 'images:copy'],
+      'all:babel',
+      'server:babel'
   );
 });
 
 gulp.task('watch', ['default', 'server:watch'], function () {
-    gulp.watch(paths.scripts, ['all:compile']);
+    //livereload.listen();
+    gulp.watch(paths.scripts, ['server:restart']);
     gulp.watch(paths.sass, ['sass']);
 });
 

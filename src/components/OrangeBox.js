@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import DraggableOrange from './DraggableOrange';
-import { verticalCenter } from './Themes';
+import { verticalCenter } from '../styles/Themes';
+import { fetch } from './decorators';
 
 const styles = {
     box: {
@@ -13,8 +14,16 @@ const styles = {
 
 @fetch(actions => actions.fetchOranges())
 export default class OrangeBox extends Component {
+  static propTypes = {
+      oranges: PropTypes.number.isRequired,
+      actions: PropTypes.object.isRequired
+  };
+
   render() {
     const { oranges } = this.props;
+
+    console.log("Render", oranges);
+
     return <div style={styles.box}>
         {
             Array.apply(0, Array(oranges)).map((x, i) => {
@@ -23,4 +32,4 @@ export default class OrangeBox extends Component {
         }
     </div>;
   }
-l}
+}

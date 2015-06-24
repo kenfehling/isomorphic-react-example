@@ -1,9 +1,7 @@
 import React from "react/addons";
 import StyleSheet from'react-style';
 import { RouteHandler } from 'react-router';
-import Menu from "./Menu";
-import { fetch } from './decorators';
-import * as OrangeActions from '../actions/OrangeActions';
+import Menu from "../components/Menu";
 
 const styles = StyleSheet.create({
     page: {

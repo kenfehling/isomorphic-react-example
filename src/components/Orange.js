@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import orange_hash from '../constants/Orange.png';
-import { orangeStyle } from './Themes';
+import { orangeStyle } from '../styles/Themes';
 
 export default class Orange extends Component {
   render() {

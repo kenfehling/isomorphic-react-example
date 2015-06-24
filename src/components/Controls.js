@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { areaTheme, buttonTheme } from './Themes';
+import { areaTheme, buttonTheme } from '../styles/Themes';
 import OrangeBox from './OrangeBox';
 
 const styles = {
@@ -17,13 +17,13 @@ const styles = {
 
 export default class Controls extends Component {
   static propTypes = {
-    onNewDay: PropTypes.func.isRequired
+    actions: PropTypes.object.isRequired
   };
   render() {
-    const { onNewDay } = this.props;
+    const { actions } = this.props;
     return <div style={styles.container}>
 	     <OrangeBox {...this.props} />
-       <button style={styles.button} onClick={onNewDay}>Let a new day begin</button>
+       <button style={styles.button} onClick={actions.newDay}>Let a new day begin</button>
     </div>;
   }
 }

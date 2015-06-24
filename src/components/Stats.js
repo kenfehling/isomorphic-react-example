@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { areaTheme, buttonTheme, verticalCenter } from './Themes';
-import OrangeBox from './OrangeBox';
+import { areaTheme, buttonTheme, verticalCenter } from '../styles/Themes';
 
 const styles = {
   container: {
@@ -18,6 +17,7 @@ export default class Stats extends Component {
   };
 
   render() {
+    {/*
     const { totalDays } = this.props;
     return <div style={styles.container}>
         <div style={styles.inner}>
@@ -25,5 +25,7 @@ export default class Stats extends Component {
            <p>Total days: {totalDays}</p>
        </div>
     </div>;
+    */}
+    return <div></div>;
   }
 }

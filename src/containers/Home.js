@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend, { NativeTypes } from 'react-dnd/modules/backends/HTML5';
 import update from 'react/lib/update';
-import Controls from './Controls';
-import OrangeBox from './OrangeBox';
-import Basket from './Basket';
-import Dish from './Dish';
-import Stats from './Stats';
-import { areaTheme } from './Themes';
+import Controls from '../components/Controls';
+import OrangeBox from '../components/OrangeBox';
+import Basket from '../components/Basket';
+import Dish from '../components/Dish';
+import Stats from '../components/Stats';
+import { areaTheme } from '../styles/Themes';
+import { bindActionCreators } from 'redux';
+import * as OrangeActions from '../actions/OrangeActions';
 import { connect } from 'redux/react';
 
 const styles = {
@@ -27,55 +29,22 @@ const styles = {
 }))
 @DragDropContext(HTML5Backend)
 export default class Container extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        oranges: this.props.oranges,  // From flux
-        basket: 0,
-        dish: 0,
-        totalDays: 0
-    };
-  }
-
   render() {
     const { dispatch } = this.props;
     const orangeActions = bindActionCreators(OrangeActions, dispatch);
 
     return <div style={styles.container}>
+      {/*
       <div style={styles.row}>
           <Basket actions={orangeActions} />
           <Controls actions={orangeActions} />
           <Dish actions={orangeActions} />
       </div>
       <div style={styles.row}>
-          <Stats totalDays={this.state.totalDays} />
+          <Stats actions={orangeActions} />
       </div>
+      */}
+        <Controls actions={orangeActions} />
     </div>;
-  }
-
-  onBasketDrop() {
-      this.increment('basket');
-      this.decrement('oranges');
-  }
-
-  onDishDrop() {
-      this.increment('dish');
-      this.decrement('oranges');
-  }
-
-  onNewDay() {
-      this.increment('totalDays');
-  }
-
-  increment(field) {
-      this.setState({
-        field: this.state[field] += 1
-      });
-  }
-
-  decrement(field) {
-      this.setState({
-        field: this.state[field] -= 1
-      });
   }
 }
