@@ -8,9 +8,7 @@ var gulp        = require('gulp'),
     server      = require('gulp-develop-server'),
     clean       = require('gulp-rimraf'),
     plumber     = require('gulp-plumber'),
-    runSequence = require('run-sequence'),
     source      = require('vinyl-source-stream'),
-    jest        = require('jest-cli');
     //livereload  = require('gulp-livereload');
 
 var paths = {
@@ -87,10 +85,4 @@ gulp.task('watch', ['default'], function () {
     //livereload.listen();
     gulp.watch([paths.scripts, paths.server_path + "**/*.js"], ['server:restart']);
     gulp.watch(paths.sass, ['sass']);
-});
-
-gulp.task('jest', function(done) {
-    return jest.runCLI({config : { rootDir: 'src' }}, ".", function() {
-        done();
-    });
 });
