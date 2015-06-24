@@ -8,7 +8,6 @@ import Basket from './Basket';
 import Dish from './Dish';
 import Stats from './Stats';
 import { areaTheme } from './Themes';
-import * as OrangeActions from '../actions/OrangeActions';
 import { connect } from 'redux/react';
 
 const styles = {
@@ -40,8 +39,12 @@ export default class Container extends Component {
   }
 
   render() {
+
+    // This stuff needs to go one level up, but Application is what passes down dispatch.
     const { dispatch } = this.props;
     const orangeActions = bindActionCreators(OrangeActions, dispatch);
+
+
     return <div style={styles.container}>
       <div style={styles.row}>
           <Basket onDrop={this.onBasketDrop.bind(this)} oranges={this.state.basket} />
