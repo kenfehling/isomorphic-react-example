@@ -28,18 +28,20 @@ var paths = {
 
 gulp.task('client:browserify', function () {
     return browserify(paths.main_client_script, {
-              debug: true //it's necessary to a source map generate 
-            })
-            .transform(babelify, { stage: 0, optional: ["runtime"] })
-            .bundle()
-        .pipe(plumber())
-        .pipe(source('main.js'))
-        .pipe(gulp.dest(paths.public_path));
+              debug: true //it's necessary to a source map generate
+    })
+    .transform(babelify, { stage: 0, optional: ["runtime"] })
+    .bundle()
+    .pipe(plumber())
+    .pipe(source('main.js'))
+    .pipe(gulp.dest(paths.public_path));
 });
 
 gulp.task('all:babel', function() {
     return gulp.src(paths.scripts)
+        .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
         .pipe(babel({ stage: 0, optional: ["runtime"] }))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.scripts_build_path));
 });
 

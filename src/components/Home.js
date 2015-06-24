@@ -23,8 +23,7 @@ const styles = {
 }
 
 @connect(state => ({
-    locations: state.locations,
-    favorites: state.favorites
+    oranges: state.oranges
 }))
 @DragDropContext(HTML5Backend)
 export default class Container extends Component {
@@ -39,17 +38,14 @@ export default class Container extends Component {
   }
 
   render() {
-
-    // This stuff needs to go one level up, but Application is what passes down dispatch.
     const { dispatch } = this.props;
     const orangeActions = bindActionCreators(OrangeActions, dispatch);
 
-
     return <div style={styles.container}>
       <div style={styles.row}>
-          <Basket onDrop={this.onBasketDrop.bind(this)} oranges={this.state.basket} />
-          <Controls onNewDay={this.onNewDay.bind(this)} oranges={this.state.oranges} />
-          <Dish onDrop={this.onDishDrop.bind(this)} oranges={this.state.dish} />
+          <Basket actions={orangeActions} />
+          <Controls actions={orangeActions} />
+          <Dish actions={orangeActions} />
       </div>
       <div style={styles.row}>
           <Stats totalDays={this.state.totalDays} />

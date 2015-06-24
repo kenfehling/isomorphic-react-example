@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     }
 });
 
-@fetch(actions => actions.fetchOranges())
 export default class Application {
 
 	render() {

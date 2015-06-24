@@ -11,6 +11,7 @@ const styles = {
     }
 };
 
+@fetch(actions => actions.fetchOranges())
 export default class OrangeBox extends Component {
   render() {
     const { oranges } = this.props;
