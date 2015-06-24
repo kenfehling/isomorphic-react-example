@@ -27,7 +27,9 @@ var paths = {
 };
 
 gulp.task('client:browserify', function () {
-    return browserify(paths.main_client_script)
+    return browserify(paths.main_client_script, {
+              debug: true //it's necessary to a source map generate 
+            })
             .transform(babelify, { stage: 0, optional: ["runtime"] })
             .bundle()
         .pipe(plumber())
@@ -81,16 +83,19 @@ gulp.task('clean', function() {
 });
 
 gulp.task('default', function() {
-    runSequence(
-        ['clean'],
-        ['client:browserify', 'sass'],
-        ['views:copy', 'images:copy'],
-        'server:run'
-    );
+    runSequence(['all:compile'], 'server:run');
+});
+
+gulp.task('all:compile', function() {
+  runSequence(
+      //['clean'],
+      ['client:browserify', 'sass'],
+      ['views:copy', 'images:copy']
+  );
 });
 
 gulp.task('watch', ['default', 'server:watch'], function () {
-    gulp.watch(paths.scripts, ['client:browserify']);
+    gulp.watch(paths.scripts, ['all:compile']);
     gulp.watch(paths.sass, ['sass']);
 });
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend, { NativeTypes } from 'react-dnd/modules/backends/HTML5';
-import ItemTypes from './ItemTypes';
 import update from 'react/lib/update';
 import Controls from './Controls';
 import OrangeBox from './OrangeBox';

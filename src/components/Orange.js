@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-
-const style = {
-    width: 75,
-    height: 73,
-    margin: 5
-};
+import orange_hash from '../constants/Orange.png';
+import { orangeStyle } from './Themes';
 
 export default class Orange extends Component {
   render() {
-      return <img style={style} src="/images/orange.png" />;
+      return <img style={orangeStyle}
+              src={ "data:image/png;base64," + orange_hash } />;
   }
 }

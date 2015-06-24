@@ -18,3 +18,9 @@ export const verticalCenter = {
     msTransform: 'translateY(-50%)',
     transform: 'translateY(-50%)'
 };
+
+export const orangeStyle = {
+    width: 75,
+    height: 73,
+    margin: 5
+}
