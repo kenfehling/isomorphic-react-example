@@ -38,15 +38,13 @@ gulp.task('client:browserify', function () {
     .pipe(gulp.dest(paths.public_path));
 });
 
-gulp.task('all:babel', function() {
-    return gulp.src(paths.scripts)
+gulp.task('server:babel', ['client:browserify', 'sass', 'views:copy', 'images:copy'], function () {
+    gulp.src(paths.scripts)
         .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
         .pipe(babel({ stage: 0, optional: ["runtime"] }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.scripts_build_path));
-});
 
-gulp.task('server:babel', function () {
     return gulp.src(paths.server_path + "**/*.js")
         .pipe(babel({ stage: 0, optional: ["runtime"] }))
         .pipe(gulp.dest(paths.server_build_path));
@@ -68,7 +66,7 @@ gulp.task('images:copy', function() {
         .pipe(copy(paths.public_path));
 });
 
-gulp.task('server:run', function() {
+gulp.task('server:run', ['server:babel'], function() {
     server.listen( { path: paths.server_build_path + paths.server_file } );
 });
 
@@ -77,32 +75,17 @@ gulp.task('server:restart', ['all:compile'], function() {
     //livereload();
 });
 
-gulp.task('server:watch', ['default'], function() {
-    gulp.watch([paths.server_path + "**/*.js"], ['server:restart']);
-});
-
 gulp.task('clean', function() {
-  return gulp.src([paths.build_path], { read: false })
-      .pipe(clean());
+    return gulp.src([paths.build_path], { read: false }).pipe(clean());
 });
 
-gulp.task('default', function() {
-    runSequence(['all:compile'], 'server:run');
+gulp.task('default', ['clean'], function() {
+    gulp.start('server:run');
 });
 
-gulp.task('all:compile', function() {
-  runSequence(
-      //['clean'],
-      ['client:browserify', 'sass'],
-      ['views:copy', 'images:copy'],
-      'all:babel',
-      'server:babel'
-  );
-});
-
-gulp.task('watch', ['default', 'server:watch'], function () {
+gulp.task('watch', ['default'], function () {
     //livereload.listen();
-    gulp.watch(paths.scripts, ['server:restart']);
+    gulp.watch([paths.scripts, paths.server_path + "**/*.js"], ['server:restart']);
     gulp.watch(paths.sass, ['sass']);
 });
 

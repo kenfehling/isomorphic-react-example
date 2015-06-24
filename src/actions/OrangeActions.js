@@ -5,12 +5,13 @@ import { API_HOST } from '../constants/Settings';
 // Right now it just fakes everything and doesn't use the API server
 
 export function fetchOranges() {
-    console.log("Fetching oranges");
-    return {
-        type: FETCH_ORANGES,
-        oranges: 7,
-        basketOranges: 0,
-        dishOranges: 0
+  return dispatch => {
+      dispatch({
+          type: FETCH_ORANGES,
+          oranges: 7,
+          basketOranges: 0,
+          dishOranges: 0
+      });
     };
 }
 
