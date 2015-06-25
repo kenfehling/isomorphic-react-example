@@ -21,19 +21,18 @@
     "babel-runtime": "^5.5.8",
     "babelify": "^6.1.2",
     "browserify": "^10.2.4",
-    "del": "^1.2.0",
     "gulp": "~3.8.9",
     "gulp-babel": "^5.1.0",
     "gulp-concat": "~2.4.1",
     "gulp-copy": "0.0.2",
     "gulp-develop-server": "^0.4.3",
     "gulp-plumber": "^1.0.1",
+    "gulp-rimraf": "^0.1.1",
     "gulp-sass": "^2.0.1",
     "gulp-sourcemaps": "^1.5.2",
     "jest-cli": "^0.4.13",
     "node-jsx": "^0.13.3",
     "react-tools": "^0.13.3",
-    "run-sequence": "^1.1.0",
     "vinyl-source-stream": "^1.1.0"
   }
 }

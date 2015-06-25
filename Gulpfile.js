@@ -6,43 +6,45 @@ var gulp        = require('gulp'),
     babelify    = require('babelify'),
     copy        = require('gulp-copy'),
     server      = require('gulp-develop-server'),
-    del         = require('del'),
+    clean       = require('gulp-rimraf'),
     plumber     = require('gulp-plumber'),
-    runSequence = require('run-sequence'),
     source      = require('vinyl-source-stream'),
     jest        = require('jest-cli');
+    //livereload  = require('gulp-livereload');
 
 var paths = {
-    scripts: ['app/**/*.js', 'app/**/*.jsx'],
+    scripts: ['src/**/*.js', 'src/**/*.jsx'],
     tests: ['tests/**/*.js'],
-    sass: ['app/**/*.s?ss'],
-    main_script: 'app/main.js',
-    main_sass: 'app/styles/main.scss',
+    sass: ['src/**/*.s?ss'],
+    main_client_script: 'src/main.js',
+    main_sass: 'src/styles/main.scss',
     server_file: 'server.js',
     server_path: 'server/',
     build_path: 'build/',
-    scripts_build_path: 'build/app/',
+    scripts_build_path: 'build/src/',
     server_build_path: 'build/server/',
     public_path: 'build/server/public/'
 };
 
 gulp.task('client:browserify', function () {
-    return browserify(paths.main_script)
-            .transform(babelify, { stage: 0, optional: ["runtime"] })
-            .bundle()
+    return browserify(paths.main_client_script, {
+        debug: true //it's necessary to a source map generate
+    })
+        .transform(babelify, { stage: 0, optional: ["runtime"] })
+        .bundle()
         .pipe(plumber())
         .pipe(source('main.js'))
         .pipe(gulp.dest(paths.public_path));
 });
 
-gulp.task('all:babel', function() {
-    return gulp.src(paths.scripts)
+gulp.task('server:babel', ['client:browserify', 'sass', 'views:copy', 'images:copy'], function () {
+    gulp.src(paths.scripts)
+        .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
         .pipe(babel({ stage: 0, optional: ["runtime"] }))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.scripts_build_path));
-});
 
-gulp.task('server:babel', function () {
-    return gulp.src(paths.server_path + paths.server_file)
+    return gulp.src(paths.server_path + "**/*.js")
         .pipe(babel({ stage: 0, optional: ["runtime"] }))
         .pipe(gulp.dest(paths.server_build_path));
 });
@@ -63,31 +65,26 @@ gulp.task('images:copy', function() {
         .pipe(copy(paths.public_path));
 });
 
-gulp.task('server:run', ['all:babel', 'server:babel'], function() {
+gulp.task('server:run', ['server:babel'], function() {
     server.listen( { path: paths.server_build_path + paths.server_file } );
 });
 
-gulp.task('server:watch', function() {
-    gulp.watch([paths.server], server.restart);
+gulp.task('server:restart', ['server:babel'], function() {
+    server.restart();
+    //livereload();
 });
 
-// May be something wrong with this:
 gulp.task('clean', function() {
-    return del([paths.build_path]);
+    return gulp.src([paths.build_path], { read: false }).pipe(clean());
 });
 
-gulp.task('default', function() {
-    runSequence(
-        //'clean',
-        ['client:browserify', 'sass'],
-        ['views:copy', 'images:copy'],
-        'server:run'
-    );
+gulp.task('default', ['clean'], function() {
+    gulp.start('server:run');
 });
 
 gulp.task('watch', ['default'], function () {
-    //runSequence('default', 'server:watch');
-    gulp.watch(paths.scripts, ['client:browserify']);
+    //livereload.listen();
+    gulp.watch([paths.scripts, paths.server_path + "**/*.js"], ['server:restart']);
     gulp.watch(paths.sass, ['sass']);
 });
 
