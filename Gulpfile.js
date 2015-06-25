@@ -82,6 +82,12 @@ gulp.task('default', ['clean'], function() {
     gulp.start('server:run');
 });
 
+gulp.task('watch', ['default'], function () {
+    //livereload.listen();
+    gulp.watch([paths.scripts, paths.server_path + "**/*.js"], ['server:restart']);
+    gulp.watch(paths.sass, ['sass']);
+});
+
 gulp.task('jest', function(done) {
     return jest.runCLI({config : { rootDir: 'app' }}, ".", function() {
         done();
