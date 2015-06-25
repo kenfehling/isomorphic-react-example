@@ -1,4 +1,4 @@
-oranges-game
+orange-game
 =====================
 
 Written in [React](http://facebook.github.io/react/)
