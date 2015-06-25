@@ -4,6 +4,8 @@ app = express(),
 port = 4444,
 bodyParser = require('body-parser');
 
+require('source-map-support').install();
+
 // Make sure to include the JSX transpiler
 require("node-jsx").install();
 
