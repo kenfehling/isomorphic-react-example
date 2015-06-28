@@ -1,4 +1,9 @@
-import 'isomorphic-fetch';
+"use strict";
+
+if (typeof process !== 'undefined') {
+    require('isomorphic-fetch');
+}
+
 import { FETCH_ALL_LOCATIONS } from '../constants/ActionTypes';
 import { API_HOST } from '../constants/Settings';
 

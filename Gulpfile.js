@@ -56,13 +56,11 @@ gulp.task('sass', function () {
 });
 
 gulp.task('views:copy', function() {
-    return gulp.src('server/views/index.ejs')
-        .pipe(copy(paths.build_path));
+    return gulp.src('server/views/index.ejs').pipe(copy(paths.build_path));
 });
 
 gulp.task('images:copy', function() {
-    return gulp.src('images/**')
-        .pipe(copy(paths.public_path));
+    return gulp.src('images/**').pipe(copy(paths.public_path));
 });
 
 gulp.task('server:run', ['server:babel'], function() {
